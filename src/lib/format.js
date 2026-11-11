@@ -85,5 +85,9 @@ export function estadoHorario(hours, fecha = new Date()) {
   return { abierto: false, texto: 'Cerrado' }
 }
 
+// Fecha 'AAAA-MM-DD' en Ecuador (la misma que usa la base para las estadísticas).
+export const fechaEcuador = (fecha = new Date()) =>
+  new Intl.DateTimeFormat('en-CA', { timeZone: 'America/Guayaquil' }).format(fecha)
+
 // Índice (0 = lunes) del día actual en Ecuador, para resaltarlo en la tabla.
 export const indiceHoy = () => ahoraEnEcuador(new Date()).indice

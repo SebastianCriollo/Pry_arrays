@@ -4,6 +4,7 @@ import { useMenu } from '../hooks/useMenu'
 import { useCart } from '../hooks/useCart'
 import { themeVars } from '../lib/theme'
 import { normalizar } from '../lib/format'
+import { registrarPedido, registrarVisita } from '../lib/stats'
 import BusinessHeader from '../components/menu/BusinessHeader'
 import ContactButtons from '../components/menu/ContactButtons'
 import SearchBar from '../components/menu/SearchBar'
@@ -30,8 +31,10 @@ export default function PublicMenu() {
   const business = menu?.business
 
   // Título de la pestaña y color de la barra del navegador con la marca del negocio.
+  // También se registra la visita para las estadísticas del dueño.
   useEffect(() => {
     if (!business) return
+    registrarVisita(business)
     document.title = `${business.name} · Menú`
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', business.background_color)
   }, [business])
@@ -163,7 +166,7 @@ export default function PublicMenu() {
       </div>
 
       {puedePedir && <CartBar unidades={cart.unidades} total={cart.total} onAbrir={() => setVerPedido(true)} />}
-      {verPedido && <CartSheet business={business} cart={cart} mesa={mesa} onClose={() => setVerPedido(false)} />}
+      {verPedido && <CartSheet business={business} cart={cart} mesa={mesa} onPedir={() => registrarPedido(business)} onClose={() => setVerPedido(false)} />}
     </div>
   )
 }

@@ -35,6 +35,16 @@ export async function getMenu(slug) {
   }
 }
 
+// Suma una visita ('view') o un pedido ('order') a las estadísticas del día.
+// Nunca lanza error: si falla, el menú sigue funcionando igual.
+export async function trackEvent(slug, kind) {
+  try {
+    await supabase.rpc('track_event', { p_slug: slug, p_kind: kind })
+  } catch {
+    /* sin conexión o migración 002 sin ejecutar: se ignora */
+  }
+}
+
 // ---------- Sesión ----------
 
 export async function getUser() {
@@ -117,6 +127,15 @@ export async function deleteProduct(id) {
 
 export async function reorderProducts(ids) {
   unwrap(await supabase.rpc('reorder_products', { p_ids: ids }))
+}
+
+// ---------- Panel: estadísticas ----------
+
+// Filas { day: 'AAAA-MM-DD', views, orders } desde la fecha indicada.
+export async function getStats(businessId, desde) {
+  return unwrap(
+    await supabase.from('menu_stats').select('day, views, orders').eq('business_id', businessId).gte('day', desde).order('day'),
+  )
 }
 
 // ---------- Storage ----------
