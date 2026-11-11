@@ -86,9 +86,25 @@ export default function PublicMenu() {
   }
 
   const puedePedir = Boolean(business.whatsapp)
-  const tarjeta = (p) => (
-    <ProductCard key={p.id} product={p} cantidad={cart.cantidades[p.id] ?? 0} onCambiar={(d) => cart.cambiar(p.id, d)} puedePedir={puedePedir} />
-  )
+  // Una lista con al menos una foto se muestra en cuadrícula de 2 columnas;
+  // si no tiene ninguna, como filas compactas (se ve mejor sin huecos vacíos).
+  const listaDeProductos = (productos) => {
+    const variante = productos.some((p) => p.image_url) ? 'grid' : 'lista'
+    return (
+      <div className={variante === 'grid' ? 'grid grid-cols-2 gap-3' : 'space-y-3'}>
+        {productos.map((p) => (
+          <ProductCard
+            key={p.id}
+            product={p}
+            variante={variante}
+            cantidad={cart.cantidades[p.id] ?? 0}
+            onCambiar={(d) => cart.cambiar(p.id, d)}
+            puedePedir={puedePedir}
+          />
+        ))}
+      </div>
+    )
+  }
 
   return (
     <div style={themeVars(business.primary_color, business.background_color)} className="min-h-dvh bg-bg text-ink">
@@ -97,25 +113,25 @@ export default function PublicMenu() {
         <ContactButtons business={business} />
 
         {/* Barra fija: buscador + categorías */}
-        <div className="sticky top-0 z-20 space-y-2.5 border-b border-ink/5 bg-bg/95 px-4 py-2.5 backdrop-blur">
+        <div className="sticky top-0 z-20 space-y-3 bg-bg/95 px-4 pb-3 pt-3 shadow-[0_8px_16px_-14px_rgb(0_0_0/0.25)] backdrop-blur">
           <SearchBar value={busqueda} onChange={setBusqueda} />
           {!resultados && grupos.length > 1 && (
             <CategoryChips categories={grupos.map((g) => g.categoria)} activa={activa} onSelect={irACategoria} />
           )}
         </div>
 
-        <main className={`px-4 pt-4 ${cart.unidades ? 'pb-28' : 'pb-10'}`}>
+        <main className={`px-4 pt-5 ${cart.unidades ? 'pb-28' : 'pb-10'}`}>
           {resultados ? (
             resultados.length ? (
               <>
                 <p className="mb-3 text-sm text-ink/60">
                   {resultados.length} {resultados.length === 1 ? 'resultado' : 'resultados'} para “{busqueda.trim()}”
                 </p>
-                <div className="space-y-3">{resultados.map(tarjeta)}</div>
+                {listaDeProductos(resultados)}
               </>
             ) : (
               <div className="py-16 text-center">
-                <p className="font-display text-xl font-semibold">Sin resultados</p>
+                <p className="text-xl font-bold">Sin resultados</p>
                 <p className="mt-1 text-sm text-ink/60">No encontramos “{busqueda.trim()}”. Prueba con otra palabra.</p>
               </div>
             )
@@ -125,13 +141,12 @@ export default function PublicMenu() {
                 key={categoria.id}
                 data-categoria={categoria.id}
                 ref={(el) => (secciones.current[categoria.id] = el)}
-                className="scroll-mt-[124px] pb-7"
+                className="scroll-mt-[136px] pb-8"
               >
-                <h2 className="mb-3 flex items-baseline gap-2 font-display text-[1.4rem] font-semibold tracking-tight">
-                  {categoria.name}
-                  <span className="font-sans text-xs font-medium text-ink/40">{productos.length}</span>
+                <h2 className="mb-4 text-xl">
+                  {categoria.name} <span className="text-ink/45">({productos.length})</span>
                 </h2>
-                <div className="space-y-3">{productos.map(tarjeta)}</div>
+                {listaDeProductos(productos)}
               </section>
             ))
           ) : (
@@ -156,18 +171,16 @@ export default function PublicMenu() {
 // Pantalla de carga con la forma del menú (se siente más rápido que un spinner).
 function Esqueleto() {
   return (
-    <div className="mx-auto max-w-xl animate-pulse px-4 pt-7" aria-busy="true" aria-label="Cargando menú">
+    <div className="mx-auto max-w-xl animate-pulse px-4 pt-4" aria-busy="true" aria-label="Cargando menú">
       <div className="flex items-center gap-4">
-        <div className="h-[72px] w-[72px] rounded-2xl bg-ink/10" />
-        <div className="flex-1 space-y-2">
-          <div className="h-6 w-2/3 rounded bg-ink/10" />
-          <div className="h-4 w-1/2 rounded bg-ink/10" />
-        </div>
+        <div className="h-44 w-full rounded-[28px] bg-ink/10" />
       </div>
-      <div className="mt-6 h-11 rounded-full bg-ink/10" />
+      <div className="mt-12 h-7 w-2/3 rounded-lg bg-ink/10" />
+      <div className="mt-3 h-4 w-1/2 rounded bg-ink/10" />
+      <div className="mt-6 h-[52px] rounded-xl bg-ink/10" />
       <div className="mt-6 space-y-3">
         {[0, 1, 2, 3].map((i) => (
-          <div key={i} className="h-28 rounded-2xl bg-ink/10" />
+          <div key={i} className="h-28 rounded-3xl bg-ink/10" />
         ))}
       </div>
     </div>
@@ -178,7 +191,7 @@ export function Mensaje({ titulo, texto, children }) {
   return (
     <div className="grid min-h-dvh place-items-center px-6 text-center">
       <div>
-        <h1 className="font-display text-2xl font-semibold">{titulo}</h1>
+        <h1 className="text-2xl font-extrabold">{titulo}</h1>
         <p className="mt-2 text-ink/60">{texto}</p>
         {children}
       </div>

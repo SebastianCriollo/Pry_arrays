@@ -23,8 +23,8 @@ export default function CategoryChips({ categories, activa, onSelect }) {
             type="button"
             aria-current={esActiva}
             onClick={() => onSelect(c.id)}
-            className={`min-h-[38px] shrink-0 whitespace-nowrap rounded-full px-4 text-sm font-semibold transition-colors ${
-              esActiva ? 'bg-primary text-on-primary' : 'bg-ink/[0.06] text-ink/75'
+            className={`h-[46px] shrink-0 whitespace-nowrap rounded-full border-2 px-5 font-bold transition-colors ${
+              esActiva ? 'border-primary bg-primary text-on-primary' : 'border-ink/[0.07] bg-bg text-ink/80'
             }`}
           >
             {c.name}

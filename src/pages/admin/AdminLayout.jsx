@@ -61,7 +61,7 @@ export default function AdminLayout() {
               to={p.to}
               end={p.end}
               className={({ isActive }) =>
-                `flex min-h-[44px] flex-1 items-center justify-center gap-1.5 border-b-2 px-2 text-sm font-semibold transition-colors sm:flex-none sm:px-4 ${
+                `flex min-h-[44px] flex-1 items-center justify-center gap-1.5 whitespace-nowrap border-b-2 px-1 text-sm font-semibold transition-colors sm:flex-none sm:px-4 ${
                   isActive ? 'border-primary text-primary' : 'border-transparent text-ink/55 hover:text-ink'
                 }`
               }

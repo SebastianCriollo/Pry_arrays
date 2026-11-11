@@ -1,5 +1,7 @@
-@import '@fontsource-variable/fraunces';
-@import '@fontsource-variable/figtree';
+/* Sen: sans geométrica y redondeada, muy legible en pantallas pequeñas. */
+@import '@fontsource/sen/400.css';
+@import '@fontsource/sen/700.css';
+@import '@fontsource/sen/800.css';
 
 @tailwind base;
 @tailwind components;
@@ -8,9 +10,9 @@
 /* Tema por defecto (panel y página de inicio). En el menú público,
    src/lib/theme.js sobreescribe estas variables con los colores del negocio. */
 :root {
-  --c-primary: 180 83 42;
+  --c-primary: 255 118 34;
   --c-on-primary: 255 255 255;
-  --c-bg: 251 247 242;
+  --c-bg: 255 255 255;
   --c-surface: 255 255 255;
   --c-ink: 35 28 23;
 }
@@ -33,11 +35,11 @@
 
 @layer components {
   .campo {
-    @apply w-full rounded-xl border border-ink/15 bg-surface px-3.5 py-2.5 text-ink outline-none transition
-      placeholder:text-ink/35 focus:border-primary focus:ring-2 focus:ring-primary/20;
+    @apply w-full rounded-xl border border-transparent bg-ink/[0.05] px-4 py-3 text-ink outline-none transition
+      placeholder:text-ink/40 focus:border-primary/60 focus:bg-surface focus:ring-4 focus:ring-primary/15;
   }
   .etiqueta {
-    @apply mb-1.5 block text-sm font-semibold text-ink/80;
+    @apply mb-2 block text-xs font-bold uppercase tracking-wider text-ink/55;
   }
 }
 

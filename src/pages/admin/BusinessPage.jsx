@@ -10,8 +10,8 @@ import HoursEditor from '../../components/admin/HoursEditor'
 import ColorPicker from '../../components/admin/ColorPicker'
 import { Logo } from '../../components/menu/BusinessHeader'
 
-const PRIMARIOS = ['#A64B2A', '#B91C1C', '#C2410C', '#B45309', '#15803D', '#0F766E', '#1D4ED8', '#6D28D9', '#BE185D', '#1C1917']
-const FONDOS = ['#FAF5EE', '#FFFFFF', '#F5F5F4', '#FEF9E7', '#F0F7F2', '#EFF6FB', '#1C1917', '#14213D']
+const PRIMARIOS = ['#FF7622', '#A64B2A', '#B91C1C', '#C2410C', '#B45309', '#15803D', '#0F766E', '#1D4ED8', '#6D28D9', '#BE185D', '#1C1917']
+const FONDOS = ['#FFFFFF', '#FAF5EE', '#F5F5F4', '#FEF9E7', '#F0F7F2', '#EFF6FB', '#1C1917', '#14213D']
 
 // Convierte lo que escriba el dueño al formato de wa.me (593 + número sin 0 inicial).
 // '099 000 0000' → '593990000000' · '+593 99 000 0000' → '593990000000'
@@ -38,6 +38,8 @@ export default function BusinessPage() {
         name: form.name.trim(),
         tagline: limpio(form.tagline),
         logo_url: form.logo_url,
+        // Solo se envía si existe la columna (bases creadas antes de la migración 001 no la tienen).
+        ...('cover_url' in business || form.cover_url ? { cover_url: form.cover_url ?? null } : {}),
         address: limpio(form.address),
         maps_url: limpio(form.maps_url),
         phone: limpio(form.phone),
@@ -48,11 +50,13 @@ export default function BusinessPage() {
         background_color: form.background_color,
       })
       if (business.logo_url && business.logo_url !== actualizado.logo_url) api.deleteImage(business.logo_url)
+      if (business.cover_url && business.cover_url !== actualizado.cover_url) api.deleteImage(business.cover_url)
       setBusiness(actualizado)
       setForm(actualizado)
       toast('Datos guardados')
-    } catch {
-      toast('No se pudieron guardar los datos', 'error')
+    } catch (err) {
+      const faltaMigracion = String(err?.message ?? '').includes('cover_url')
+      toast(faltaMigracion ? 'Falta ejecutar la migración 001 en Supabase' : 'No se pudieron guardar los datos', 'error')
     } finally {
       setGuardando(false)
     }
@@ -61,7 +65,15 @@ export default function BusinessPage() {
   return (
     <form onSubmit={guardar} className="space-y-8">
       <Seccion titulo="Datos del negocio">
-        <ImageUploader value={form.logo_url} onChange={set('logo_url')} businessId={business.id} tipo="logo" />
+        <div>
+          <p className="etiqueta">Logo</p>
+          <ImageUploader value={form.logo_url} onChange={set('logo_url')} businessId={business.id} tipo="logo" />
+        </div>
+        <div>
+          <p className="etiqueta">Foto de portada <span className="font-normal normal-case tracking-normal text-ink/45">(opcional)</span></p>
+          <ImageUploader value={form.cover_url ?? null} onChange={set('cover_url')} businessId={business.id} tipo="portada" />
+          <p className="mt-1 text-xs text-ink/50">Una foto horizontal de tu local o de tu plato estrella. Sin portada se usa tu color principal.</p>
+        </div>
         <Campo id="n-nombre" label="Nombre">
           <input id="n-nombre" required className="campo" maxLength={50} value={form.name} onChange={set('name')} />
         </Campo>
@@ -148,7 +160,7 @@ function Campo({ id, label, opcional, ayuda, children }) {
   return (
     <div>
       <label htmlFor={id} className="etiqueta">
-        {label} {opcional && <span className="font-normal text-ink/45">(opcional)</span>}
+        {label} {opcional && <span className="font-normal normal-case tracking-normal text-ink/45">(opcional)</span>}
       </label>
       {children}
       {ayuda && <p className="mt-1 text-xs text-ink/50">{ayuda}</p>}

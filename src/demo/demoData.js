@@ -23,8 +23,9 @@ export const demoBusiness = {
     sab: dia('08:00', '21:00'),
     dom: dia('08:00', '15:00'),
   },
-  primary_color: '#A64B2A',
-  background_color: '#FAF5EE',
+  cover_url: null,
+  primary_color: '#FF7622',
+  background_color: '#FFFFFF',
   is_active: true,
 }
 

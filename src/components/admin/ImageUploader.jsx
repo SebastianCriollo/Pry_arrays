@@ -7,7 +7,7 @@ import { useToast } from '../ui/Toast'
 const enKb = (bytes) => (bytes > 1048576 ? `${(bytes / 1048576).toFixed(1)} MB` : `${Math.round(bytes / 1024)} KB`)
 
 // Selector de foto: comprime en el navegador, sube y devuelve la URL.
-// tipo: 'producto' | 'logo'
+// tipo: 'producto' | 'logo' | 'portada' (la portada se previsualiza apaisada)
 export default function ImageUploader({ value, onChange, businessId, tipo = 'producto' }) {
   const input = useRef(null)
   const toast = useToast()
@@ -21,7 +21,7 @@ export default function ImageUploader({ value, onChange, businessId, tipo = 'pro
     setSubiendo(true)
     try {
       const comprimida = await comprimirImagen(archivo, tipo)
-      const url = await api.uploadImage(businessId, comprimida, tipo === 'logo' ? '' : 'productos')
+      const url = await api.uploadImage(businessId, comprimida, tipo === 'producto' ? 'productos' : '')
       setAhorro(`Optimizada: ${enKb(archivo.size)} → ${enKb(comprimida.size)}`)
       onChange(url)
     } catch (err) {
@@ -37,7 +37,7 @@ export default function ImageUploader({ value, onChange, businessId, tipo = 'pro
         type="button"
         onClick={() => input.current.click()}
         disabled={subiendo}
-        className="relative grid h-24 w-24 shrink-0 place-items-center overflow-hidden rounded-2xl border-2 border-dashed border-ink/20 bg-surface text-ink/40 hover:border-primary hover:text-primary"
+        className={`relative grid ${tipo === 'portada' ? 'h-24 w-40' : 'h-24 w-24'} shrink-0 place-items-center overflow-hidden rounded-2xl border-2 border-dashed border-ink/20 bg-surface text-ink/40 hover:border-primary hover:text-primary`}
         aria-label={value ? 'Cambiar foto' : 'Subir foto'}
       >
         {value ? <img src={value} alt="" className="h-full w-full object-cover" /> : <Icon name="image" className="h-7 w-7" />}

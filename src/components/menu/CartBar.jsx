@@ -9,16 +9,16 @@ export default function CartBar({ unidades, total, onAbrir }) {
       <button
         type="button"
         onClick={onAbrir}
-        className="pointer-events-auto flex h-14 w-full items-center gap-3 rounded-2xl bg-primary px-4 text-on-primary shadow-float transition active:scale-[0.98]"
+        className="pointer-events-auto flex h-[62px] w-full items-center gap-3 rounded-2xl bg-[#121223] pl-4 pr-2 text-white shadow-float transition active:scale-[0.98]"
       >
-        <span className="relative">
-          <Icon name="bag" className="h-6 w-6" />
-          <span key={unidades} className="absolute -right-2 -top-2 grid h-5 min-w-[1.25rem] animate-pop place-items-center rounded-full bg-on-primary px-1 text-[11px] font-bold text-primary">
+        <span className="relative grid h-10 w-10 place-items-center rounded-full bg-white/10">
+          <Icon name="bag" className="h-5 w-5" strokeWidth={2} />
+          <span key={unidades} className="absolute -right-1.5 -top-1.5 grid h-5 min-w-[1.25rem] animate-pop place-items-center rounded-full bg-primary px-1 text-[11px] font-extrabold text-on-primary">
             {unidades}
           </span>
         </span>
-        <span className="flex-1 text-left font-semibold">Ver mi pedido</span>
-        <span className="font-display text-lg font-semibold tabular-nums">{formatPrice(total)}</span>
+        <span className="flex-1 text-left text-sm font-extrabold uppercase tracking-wider">Ver mi pedido</span>
+        <span className="rounded-xl bg-primary px-3.5 py-2.5 text-[17px] font-extrabold tabular-nums text-on-primary">{formatPrice(total)}</span>
       </button>
     </div>
   )

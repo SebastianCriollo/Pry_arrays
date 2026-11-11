@@ -18,15 +18,15 @@ export default function ContactButtons({ business }) {
   if (!botones.length) return null
 
   return (
-    <nav aria-label="Contacto" className="flex gap-2 px-4 pb-4">
+    <nav aria-label="Contacto" className="flex gap-2 px-4 pb-1 pt-4">
       {botones.map((b) => (
         <a
           key={b.texto}
           href={b.href}
           {...(b.externo ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
-          className="flex min-h-[44px] flex-1 items-center justify-center gap-1.5 rounded-xl border border-ink/10 bg-surface whitespace-nowrap px-2 text-sm font-semibold transition active:scale-[0.97]"
+          className="flex min-h-[46px] flex-1 items-center justify-center gap-2 whitespace-nowrap rounded-full border-2 border-ink/[0.07] px-2 text-sm font-bold transition active:scale-[0.97]"
         >
-          <Icon name={b.icono} className="h-[18px] w-[18px] text-primary" />
+          <Icon name={b.icono} className="h-[18px] w-[18px] text-primary" strokeWidth={2} />
           {b.texto}
         </a>
       ))}
