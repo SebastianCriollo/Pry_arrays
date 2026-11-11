@@ -6,8 +6,9 @@ import Icon from '../../components/ui/Icon'
 
 const PESTANAS = [
   { to: '/admin', end: true, icono: 'list', texto: 'Menú' },
-  { to: '/admin/negocio', icono: 'store', texto: 'Mi negocio' },
-  { to: '/admin/qr', icono: 'qr', texto: 'Código QR' },
+  { to: '/admin/negocio', icono: 'store', texto: 'Negocio' },
+  { to: '/admin/qr', icono: 'qr', texto: 'QR' },
+  { to: '/admin/estadisticas', icono: 'chart', texto: 'Visitas' },
 ]
 
 // Marco del panel: exige sesión, carga el negocio del dueño y lo comparte

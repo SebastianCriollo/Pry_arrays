@@ -2,6 +2,7 @@
 // localStorage. Sirve para probar la app sin backend y para enseñarle el
 // panel a un posible cliente sin crearle una cuenta.
 import { demoBusiness, demoMenu } from '../../demo/demoData'
+import { fechaEcuador } from '../format'
 
 const KEY = 'menuqr-demo-v1'
 const KEY_SESION = 'menuqr-demo-sesion'
@@ -78,6 +79,48 @@ export async function getMenu(slug) {
     categories,
     products: db.products.filter((p) => ids.has(p.category_id)).sort(byPosition),
   }
+}
+
+// Estadísticas de la demo: lo que pase en este navegador se suma encima de un
+// historial inventado de 30 días, para que el panel no se vea vacío al enseñarlo.
+const KEY_STATS = 'menuqr-demo-stats'
+
+function historialDemo() {
+  const filas = []
+  for (let i = 29; i >= 0; i--) {
+    const fecha = new Date(Date.now() - i * 86400000)
+    const finDeSemana = [0, 6].includes(fecha.getDay())
+    // Números pseudoaleatorios pero estables (siempre los mismos para cada día).
+    const ruido = Math.abs(Math.sin(fecha.getDate() * 12.9898 + fecha.getMonth() * 78.233)) % 1
+    const views = Math.round((finDeSemana ? 46 : 24) + ruido * 18 + (29 - i) * 0.6)
+    filas.push({ day: fechaEcuador(fecha), views, orders: Math.round(views * (0.07 + ruido * 0.06)) })
+  }
+  return filas
+}
+
+export async function trackEvent(_slug, kind) {
+  try {
+    const stats = JSON.parse(localStorage.getItem(KEY_STATS)) ?? {}
+    const hoy = fechaEcuador()
+    stats[hoy] ??= { views: 0, orders: 0 }
+    stats[hoy][kind === 'order' ? 'orders' : 'views'] += 1
+    localStorage.setItem(KEY_STATS, JSON.stringify(stats))
+  } catch {
+    /* ignorar */
+  }
+}
+
+export async function getStats(_businessId, desde) {
+  await esperar()
+  let locales = {}
+  try {
+    locales = JSON.parse(localStorage.getItem(KEY_STATS)) ?? {}
+  } catch {
+    /* ignorar */
+  }
+  return historialDemo()
+    .filter((f) => f.day >= desde)
+    .map((f) => ({ ...f, views: f.views + (locales[f.day]?.views ?? 0), orders: f.orders + (locales[f.day]?.orders ?? 0) }))
 }
 
 // ---------- Sesión ----------

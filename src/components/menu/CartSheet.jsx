@@ -6,7 +6,7 @@ import { enlaceWhatsApp, mensajePedido } from '../../lib/whatsapp'
 
 // Pantalla del pedido: lista de productos sobre fondo oscuro y, abajo,
 // un panel claro con los datos opcionales, el total y el botón de WhatsApp.
-export default function CartSheet({ business, cart, mesa, onClose }) {
+export default function CartSheet({ business, cart, mesa, onPedir, onClose }) {
   const [nombre, setNombre] = useState('')
   const [nota, setNota] = useState('')
   const { items, total, cambiar, vaciar } = cart
@@ -91,6 +91,7 @@ export default function CartSheet({ business, cart, mesa, onClose }) {
               href={href}
               target="_blank"
               rel="noopener noreferrer"
+              onClick={onPedir}
               className="mt-5 flex h-[62px] items-center justify-center gap-2.5 rounded-xl bg-[#1FAF5A] text-sm font-extrabold uppercase tracking-wider text-white transition active:scale-[0.98]"
             >
               <IconWhatsApp className="h-6 w-6" />

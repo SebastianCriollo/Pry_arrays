@@ -6,6 +6,7 @@ import AdminLayout from './AdminLayout'
 import ProductsPage from './ProductsPage'
 import BusinessPage from './BusinessPage'
 import QrPage from './QrPage'
+import StatsPage from './StatsPage'
 
 // Raíz del panel de administración (/admin/*).
 export default function AdminApp() {
@@ -19,6 +20,7 @@ export default function AdminApp() {
             <Route index element={<ProductsPage />} />
             <Route path="negocio" element={<BusinessPage />} />
             <Route path="qr" element={<QrPage />} />
+            <Route path="estadisticas" element={<StatsPage />} />
           </Route>
           <Route path="*" element={<Navigate to="/admin" replace />} />
         </Routes>

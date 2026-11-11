@@ -28,6 +28,7 @@ const TRAZOS = {
   qr: 'M4 4h6v6H4V4Zm10 0h6v6h-6V4ZM4 14h6v6H4v-6Zm10 0h2.500v2.500H14V14Zm3.5 3.500H20V20h-2.500v-2.500Z',
   store: 'M4 10v10h16V10M3 6l1.5-2h15L21 6v1.500a3 3 0 0 1-6 0 3 3 0 0 1-6 0 3 3 0 0 1-6 0V6Zm7 14v-5h4v5',
   list: 'M8 6h12M8 12h12M8 18h12M4 6h.01M4 12h.01M4 18h.01',
+  chart: 'M4 4v16h16M8 16v-4m4 4V8m4 8v-6',
 }
 
 export default function Icon({ name, className = 'h-5 w-5', strokeWidth = 1.8 }) {

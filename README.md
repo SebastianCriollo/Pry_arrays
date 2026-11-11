@@ -52,6 +52,7 @@ Si creaste tu base con una versión anterior, ejecuta en el SQL Editor los archi
 | Migración | Qué agrega |
 |---|---|
 | `001-nuevo-estilo.sql` | Foto de portada del menú y los colores por defecto del nuevo estilo (naranja y blanco) |
+| `002-estadisticas.sql` | Contador de visitas y de pedidos por WhatsApp (pestaña *Visitas* del panel) |
 
 ### Cargar la cafetería de ejemplo
 
@@ -145,6 +146,8 @@ Con un dominio propio, los QR apuntan a `tudominio.com/slug`. **Genera los QR de
 El menú muestra «Abierto · cierra 20:00» o «Cerrado · abre mañana 08:00», calculado con la hora de Ecuador. Soporta turnos que pasan de medianoche.
 
 **Pedidos.** No se guardan en la base: el carrito vive en el celular del cliente y el botón arma un mensaje de WhatsApp con productos, cantidades, total, nombre, nota y mesa. Si el negocio no tiene WhatsApp configurado, el menú se muestra sin carrito.
+
+**Estadísticas.** Cada apertura del menú suma una visita (una por celular y por día; las del dueño con sesión abierta no cuentan) y cada toque en *Pedir por WhatsApp* suma un pedido. Se guardan por día en `menu_stats` mediante la función `track_event`; el público no puede leer ni escribir la tabla directamente. El dueño las ve en la pestaña *Visitas*.
 
 **Mesas.** En la pestaña *Código QR* se puede poner un número de mesa: el QR lleva `?mesa=N` y el pedido llega con «Mesa N».
 
