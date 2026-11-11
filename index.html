@@ -1,46 +1,15 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ARREGLOS EN JS</title>
-    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
-</head>
-<body class="bg-dark text-white text-center">
-    <div class="container">
-        <h1>LISTA DE COMPRAS</h1>
-        <hr>
-
-        <div class="form-floating mb-3">
-            <input
-                type="text"
-                class="form-control"
-                id="txt_producto"
-                placeholder="Ej: Arroz"
-                autofocus
-            />
-            <label>INGRESE PRODUCTO</label>
-        </div>
-
-        <div class="d-grid gap-2 mb-3">
-            <button
-                type="button"
-                id="btn_agregar"
-                class="btn btn-primary"
-            >
-                AGREGAR
-            </button>
-        </div>
-
-        <h5>Productos en minúsculas</h5>
-        <ul class="list-group list-group-flush pt-2" id="lista_productos"></ul>
-
-        <h5 class="pt-3">Productos en mayúsculas</h5>
-        <ul class="list-group list-group-flush pt-2" id="lista_productos_mayuscula"></ul>
-
-    </div>
-
-    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
-    <script src="public/js/compras.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#FBF7F2" />
+    <meta name="description" content="Menú digital con código QR para restaurantes y cafeterías." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>MenúQR</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
