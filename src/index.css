@@ -1,0 +1,67 @@
+@import '@fontsource-variable/fraunces';
+@import '@fontsource-variable/figtree';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tema por defecto (panel y página de inicio). En el menú público,
+   src/lib/theme.js sobreescribe estas variables con los colores del negocio. */
+:root {
+  --c-primary: 180 83 42;
+  --c-on-primary: 255 255 255;
+  --c-bg: 251 247 242;
+  --c-surface: 255 255 255;
+  --c-ink: 35 28 23;
+}
+
+@layer base {
+  html {
+    -webkit-tap-highlight-color: transparent;
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-bg font-sans text-ink antialiased;
+  }
+  /* Evita el zoom automático de iOS al enfocar campos (necesita ≥16px). */
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+  }
+}
+
+@layer components {
+  .campo {
+    @apply w-full rounded-xl border border-ink/15 bg-surface px-3.5 py-2.5 text-ink outline-none transition
+      placeholder:text-ink/35 focus:border-primary focus:ring-2 focus:ring-primary/20;
+  }
+  .etiqueta {
+    @apply mb-1.5 block text-sm font-semibold text-ink/80;
+  }
+}
+
+@layer utilities {
+  .sin-scrollbar {
+    scrollbar-width: none;
+  }
+  .sin-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* Respeta la barra inferior de gestos del celular. */
+  .pb-seguro {
+    padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
