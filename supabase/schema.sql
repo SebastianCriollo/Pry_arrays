@@ -18,6 +18,7 @@ create table public.businesses (
   name             text not null,
   tagline          text,                -- frase corta bajo el nombre
   logo_url         text,
+  cover_url        text,                -- foto de portada del menú (opcional)
   address          text,
   maps_url         text,                -- enlace de Google Maps
   phone            text,                -- botón "Llamar"
@@ -26,8 +27,8 @@ create table public.businesses (
   -- Horario por día. Claves: lun, mar, mie, jue, vie, sab, dom.
   -- Día abierto: {"abre":"08:00","cierra":"20:00"} · Día cerrado: null
   hours            jsonb not null default '{}'::jsonb,
-  primary_color    text not null default '#B4532A' check (primary_color ~ '^#[0-9A-Fa-f]{6}$'),
-  background_color text not null default '#FBF7F2' check (background_color ~ '^#[0-9A-Fa-f]{6}$'),
+  primary_color    text not null default '#FF7622' check (primary_color ~ '^#[0-9A-Fa-f]{6}$'),
+  background_color text not null default '#FFFFFF' check (background_color ~ '^#[0-9A-Fa-f]{6}$'),
   -- Lo controla el vendedor: en false el menú deja de verse (cliente que no paga).
   is_active        boolean not null default true,
   created_at       timestamptz not null default now(),

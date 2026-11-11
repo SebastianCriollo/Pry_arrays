@@ -45,6 +45,14 @@ El modo demo también sirve para enseñarle el panel a un posible cliente sin cr
 
 6. Reinicia `npm run dev`.
 
+### Actualizar una base ya instalada
+
+Si creaste tu base con una versión anterior, ejecuta en el SQL Editor los archivos de [`supabase/migraciones/`](supabase/migraciones) que aún no hayas corrido, en orden. Son seguros: no borran datos.
+
+| Migración | Qué agrega |
+|---|---|
+| `001-nuevo-estilo.sql` | Foto de portada del menú y los colores por defecto del nuevo estilo (naranja y blanco) |
+
 ### Cargar la cafetería de ejemplo
 
 1. **Authentication → Users → Add user:** email `demo@menuqr.app`, la contraseña que quieras, y marca *Auto Confirm User*.
@@ -126,7 +134,7 @@ Con un dominio propio, los QR apuntan a `tudominio.com/slug`. **Genera los QR de
 
 **Seguridad.** Todo se decide en la base de datos con Row Level Security, no en el navegador. Cualquiera puede *leer* negocios activos, categorías visibles y sus productos. Solo el dueño (`owner_id = auth.uid()`) puede escribir, y solo en su negocio. En Storage, cada dueño solo puede subir a la carpeta con el id de su negocio.
 
-**Tema por negocio.** El dueño elige un color principal y uno de fondo. `theme.js` los convierte en variables CSS y calcula solo el color del texto (oscuro o claro) para que siempre haya contraste.
+**Tema por negocio.** El dueño elige un color principal y uno de fondo (por defecto naranja `#FF7622` sobre blanco), y puede subir una foto de portada. `theme.js` los convierte en variables CSS y calcula solo el color del texto (oscuro o claro) para que siempre haya contraste.
 
 **Horario.** Se guarda por día en `businesses.hours`:
 
@@ -140,6 +148,6 @@ El menú muestra «Abierto · cierra 20:00» o «Cerrado · abre mañana 08:00»
 
 **Mesas.** En la pestaña *Código QR* se puede poner un número de mesa: el QR lleva `?mesa=N` y el pedido llega con «Mesa N».
 
-**Fotos.** Se comprimen en el navegador antes de subir (WebP, máx. 1200 px, unos 100–200 KB).
+**Fotos.** Se comprimen en el navegador antes de subir (WebP: productos hasta 1200 px, portada hasta 1600 px, logo hasta 400 px). Una categoría con al menos una foto se muestra en cuadrícula de 2 columnas; sin fotos, como lista.
 
 **Etiquetas de producto.** `nuevo`, `mas_pedido` y `picante`. Para agregar otra: añádela al `check` de `products.tag` en la base y al objeto `TAGS` en `src/components/menu/ProductCard.jsx`.

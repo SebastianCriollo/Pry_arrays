@@ -26,7 +26,7 @@ begin
   values
     (v_owner, 'cafe-ruminahui', 'Café Rumiñahui', 'Café de altura y cocina de casa al pie de los volcanes', 'Av. Amazonas y Luis Cordero, Machachi',
      'https://www.google.com/maps/search/?api=1&query=Machachi+Ecuador', '+593 99 000 0000', '593990000000', 'cafe.ruminahui',
-     '{"lun":{"abre":"07:30","cierra":"19:00"},"mar":{"abre":"07:30","cierra":"19:00"},"mie":{"abre":"07:30","cierra":"19:00"},"jue":{"abre":"07:30","cierra":"19:00"},"vie":{"abre":"07:30","cierra":"21:00"},"sab":{"abre":"08:00","cierra":"21:00"},"dom":{"abre":"08:00","cierra":"15:00"}}'::jsonb, '#A64B2A', '#FAF5EE')
+     '{"lun":{"abre":"07:30","cierra":"19:00"},"mar":{"abre":"07:30","cierra":"19:00"},"mie":{"abre":"07:30","cierra":"19:00"},"jue":{"abre":"07:30","cierra":"19:00"},"vie":{"abre":"07:30","cierra":"21:00"},"sab":{"abre":"08:00","cierra":"21:00"},"dom":{"abre":"08:00","cierra":"15:00"}}'::jsonb, '#FF7622', '#FFFFFF')
   returning id into v_negocio;
 
   -- Desayunos

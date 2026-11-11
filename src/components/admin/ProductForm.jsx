@@ -52,7 +52,7 @@ export default function ProductForm({ product, categoriaInicial, categories, bus
         </div>
 
         <div>
-          <label htmlFor="p-desc" className="etiqueta">Descripción corta <span className="font-normal text-ink/45">(opcional)</span></label>
+          <label htmlFor="p-desc" className="etiqueta">Descripción corta <span className="font-normal normal-case tracking-normal text-ink/45">(opcional)</span></label>
           <textarea id="p-desc" rows={2} className="campo resize-none" value={form.description} onChange={set('description')} maxLength={140} placeholder="Ingredientes o cómo se sirve" />
         </div>
 

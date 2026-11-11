@@ -4,15 +4,19 @@
 
 const TIPOS = ['image/jpeg', 'image/png', 'image/webp']
 
-// tipo: 'producto' (hasta 1200 px) o 'logo' (hasta 400 px)
+// tipo: 'producto' (hasta 1200 px), 'logo' (hasta 400 px) o 'portada' (hasta 1600 px)
+const LIMITES = {
+  producto: { maxWidthOrHeight: 1200, maxSizeMB: 0.2 },
+  logo: { maxWidthOrHeight: 400, maxSizeMB: 0.08 },
+  portada: { maxWidthOrHeight: 1600, maxSizeMB: 0.3 },
+}
+
 export async function comprimirImagen(file, tipo = 'producto') {
   if (!TIPOS.includes(file.type)) throw new Error('Usa una imagen JPG, PNG o WebP')
   // La librería se descarga solo cuando el dueño sube una foto.
   const { default: imageCompression } = await import('browser-image-compression')
-  const esLogo = tipo === 'logo'
   return imageCompression(file, {
-    maxWidthOrHeight: esLogo ? 400 : 1200,
-    maxSizeMB: esLogo ? 0.08 : 0.2,
+    ...(LIMITES[tipo] ?? LIMITES.producto),
     fileType: 'image/webp',
     initialQuality: 0.82,
     useWebWorker: true,

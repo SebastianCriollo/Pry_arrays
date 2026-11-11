@@ -72,7 +72,7 @@ export default function QrPage() {
         </div>
 
         <div>
-          <label htmlFor="q-mesa" className="etiqueta">Número de mesa <span className="font-normal text-ink/45">(opcional)</span></label>
+          <label htmlFor="q-mesa" className="etiqueta">Número de mesa <span className="font-normal normal-case tracking-normal text-ink/45">(opcional)</span></label>
           <input id="q-mesa" inputMode="numeric" maxLength={10} className="campo max-w-[9rem]" placeholder="Ej.: 5" value={mesa} onChange={(e) => setMesa(e.target.value)} />
           <p className="mt-1 text-xs text-ink/50">Si lo pones, el pedido por WhatsApp te llega con “Mesa {numeroMesa || '5'}”. Genera un QR por cada mesa.</p>
         </div>

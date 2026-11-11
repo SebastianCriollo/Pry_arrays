@@ -17,11 +17,12 @@ export default {
         ink: color('ink'),               // texto
       },
       fontFamily: {
-        display: ['"Fraunces Variable"', 'Georgia', 'serif'],
-        sans: ['"Figtree Variable"', 'system-ui', 'sans-serif'],
+        // Una sola familia (Sen): "display" se mantiene para títulos en negrita.
+        display: ['Sen', 'system-ui', 'sans-serif'],
+        sans: ['Sen', 'system-ui', 'sans-serif'],
       },
       boxShadow: {
-        card: '0 1px 2px rgb(0 0 0 / 0.04), 0 4px 16px -6px rgb(0 0 0 / 0.08)',
+        card: '0 1px 2px rgb(0 0 0 / 0.03), 0 12px 32px -10px rgb(150 150 154 / 0.35)',
         float: '0 10px 30px -8px rgb(0 0 0 / 0.3)',
       },
       keyframes: {
